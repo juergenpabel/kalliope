@@ -1,26 +1,12 @@
 import logging
 
 from kalliope.core.Cortex import Cortex
+from kalliope.core.Lifo.LifoException import SynapseListAddedToLIFO, Serialize
 from kalliope.core.NeuronLauncher import NeuronLauncher
 from kalliope.core.Models.APIResponse import APIResponse
 
 logging.basicConfig()
 logger = logging.getLogger("kalliope")
-
-
-class Serialize(Exception):
-    """
-    When raised, the LIFO class return the current API response to the caller
-    """
-    pass
-
-
-class SynapseListAddedToLIFO(Exception):
-    """
-    When raised, a synapse list to process has been added to the LIFO list.
-    The LIFO must start over and process the last synapse list added
-    """
-    pass
 
 
 class LIFOBuffer(object):
@@ -167,7 +153,7 @@ class LIFOBuffer(object):
                 self.answer = None
             # todo fix this when we have a full client/server call. The client would be the voice or api call
             neuron.parameters["is_api_call"] = self.is_api_call
-            logger.debug("[LIFOBuffer] process_neuron_list: is_api_call: %s" % (self.is_api_call))
+            logger.debug("[LIFOBuffer] process_neuron_list: is_api_call: %s" % self.is_api_call)
             # execute the neuron
             instantiated_neuron = NeuronLauncher.start_neuron(neuron=neuron,
                                                               parameters_dict=matched_synapse.parameters)

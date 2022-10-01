@@ -1,4 +1,3 @@
-import os
 import unittest
 
 import mock
@@ -7,7 +6,6 @@ from Tests.utils.utils import get_test_path
 from kalliope.core import LifoManager
 from kalliope.core.ConfigurationManager import BrainLoader
 from kalliope.core.Lifo.LIFOBuffer import Serialize, SynapseListAddedToLIFO
-
 from kalliope.core.Models import Singleton
 from kalliope.core.Models.MatchedSynapse import MatchedSynapse
 
@@ -331,6 +329,7 @@ class TestLIFOBuffer(unittest.TestCase):
             with self.assertRaises(Serialize):
                 self.lifo_buffer._process_neuron_list(matched_synapse=matched_synapse)
 
+    def test_process_neuron_list_with_neurotransmitter(self):
         # test with a neuron that want to add a synapse list to the LIFO
         LifoManager.clean_saved_lifo()
         synapse = BrainLoader().brain.get_synapse_by_name("synapse6")
@@ -342,8 +341,13 @@ class TestLIFOBuffer(unittest.TestCase):
         self.lifo_buffer.set_api_call(True)
         self.lifo_buffer.set_answer("synapse 6 answer")
         with mock.patch("kalliope.core.TTS.TTSModule.generate_and_play"):
-            self.assertRaises(SynapseListAddedToLIFO,
-                              self.lifo_buffer._process_neuron_list(matched_synapse=matched_synapse))
+            # self.assertRaises(SynapseListAddedToLIFO,
+            #                   self.lifo_buffer._process_neuron_list,
+            #                   **{'matched_synapse': matched_synapse})
+            with mock.patch("kalliope.core.Lifo.LifoException.SynapseListAddedToLIFO.__init__") as mock_exception:
+                mock_exception.return_value = None
+                self.lifo_buffer._process_neuron_list(matched_synapse=matched_synapse)
+                mock_exception.assert_called()
 
 
 if __name__ == '__main__':

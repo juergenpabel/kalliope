@@ -7,7 +7,7 @@ Kalliope can be installed:
 
 ## Install via script
 
-Just run the following bash command to install Kalliope on a freshly installed Raspberry Pi:
+Just run the following bash command to install Kalliope on a freshly installed Raspberry Pi (32bit):
 ```
 bash -c "$(curl -sL https://raw.githubusercontent.com/kalliope-project/kalliope/master/install/rpi_install_kalliope.sh)"
 ```
@@ -39,8 +39,8 @@ wget http://ftp.fr.debian.org/debian/pool/non-free/s/svox/libttspico-utils_1.0+g
 wget http://ftp.fr.debian.org/debian/pool/non-free/s/svox/libttspico0_1.0+git20130326-9_armhf.deb
 wget http://ftp.fr.debian.org/debian/pool/non-free/s/svox/libttspico-data_1.0+git20130326-9_all.deb
 sudo dpkg -i libttspico-data_1.0+git20130326-9_all.deb
-sudo dpkg -i libttspico-utils_1.0+git20130326-9_armhf.deb
 sudo dpkg -i libttspico0_1.0+git20130326-9_armhf.deb
+sudo dpkg -i libttspico-utils_1.0+git20130326-9_armhf.deb
 ```
 
 Install the last release of python-pip:
